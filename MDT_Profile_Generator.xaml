@@ -1,0 +1,462 @@
+﻿<!--
+#========================================================================
+#
+# Tool Name	: MDT Profile Generator
+# Version:	: 1.1	
+# Author 	: Damien VAN ROBAEYS
+# Date 		: 01/06/2016
+# Website	: http://www.systanddeploy.com/
+# Twitter	: https://twitter.com/syst_and_deploy
+#
+#========================================================================
+-->
+<Controls:MetroWindow 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"		
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="MDT Profile Generator v1.1" Height="370" Width="780" WindowStyle="None" ResizeMode="NoResize"
+		>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Create Metro Style  -->
+                <ResourceDictionary Source=".\resources\Icons.xaml" />
+                <ResourceDictionary Source=".\resources\custom.xaml" /> 
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+	
+	
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>	
+            <Button x:Name="about" ToolTip="About the tool">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="15" Height="15" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_question}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>				
+		
+            <Button x:Name="Clear_All_Button" ToolTip="Clear all field">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="15" Height="15" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_delete}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>		
+
+    <Grid Background="white">    
+		<StackPanel>			
+			<StackPanel Margin="10,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top" Height="300">
+				<TabControl x:Name="Tab_Control" HorizontalAlignment="Left" Height="300"  VerticalAlignment="Top" Width="750" >
+					<TabItem Header="Details" Margin="0,0,0,0">
+							<Grid>
+								<StackPanel>		
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Profile name" Margin="4,0,0,0" Width="110"></Label>
+										<TextBox x:Name="Profile_Name" Margin="0,0,0,0" Width="185" Height="19"></TextBox>			
+										<Label x:Name="Profile_Name_Info" Margin="4,0,0,0" Width="300"></Label>																
+									</StackPanel>		
+								
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Profile path" Margin="4,0,0,0" Width="110"></Label>
+										<Button x:Name="Profile_Path" Content="Browse"  Margin="0,0,0,0" Width="60" Height="26"></Button>			
+										<TextBox x:Name="Profile_Path_TextBox" Margin="4,0,0,0" Width="121" Height="19"></TextBox>	
+										<Label x:Name="Profile_Path_Info" Margin="4,0,0,0" Width="300"></Label>								
+									</StackPanel>	
+
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Task Sequence" Margin="4,0,0,0" Width="110"></Label>
+										<ComboBox x:Name="Choose_TS" SelectedIndex="0" Text="Choose" Height="25" Width="185" Margin="0,0,0,0"></ComboBox>                    
+										<Label x:Name="Choose_TS_Info" Margin="4,0,0,0" Width="300"></Label>																	
+									</StackPanel>		
+
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Deployment type" Margin="4,0,0,0" Width="110"></Label>
+										<ComboBox SelectedIndex="0" Text="Choose" Height="25" Width="115" Margin="0,0,0,0">
+											<ComboBoxItem x:Name="Deployment_Type_NoSet" Content="Do not set"></ComboBoxItem>										
+											<ComboBoxItem x:Name="Deployment_Type_Newcomputer" Content="New computer"></ComboBoxItem>
+											<ComboBoxItem x:Name="Deployment_Type_Refresh" Content="Refresh"></ComboBoxItem>
+										</ComboBox>   
+										<Button x:Name="Choose_deploy_type" Content="Apply"  Margin="4,0,0,0" Width="66" Height="26"></Button>														               																		
+									</StackPanel>												
+
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="OS Language" Margin="4,0,0,0" Width="110"></Label>
+										<ComboBox x:Name="Choose_OSLanguage" SelectedIndex="0" Text="Choose" Height="25" Width="185" Margin="0,0,0,0"></ComboBox>                    
+										<Label x:Name="OS_Language_Info" Margin="4,0,0,0" Width="300"></Label>								
+									</StackPanel>	
+
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Second Language" Margin="4,0,0,0" Width="110"></Label>
+										<ComboBox x:Name="Choose_second_OSLanguage" SelectedIndex="0" Text="Choose" Height="25" Width="185" Margin="0,0,0,0">                 
+											<ComboBoxItem x:Name="Second_language_none" Content="Do not install"></ComboBoxItem>
+										</ComboBox>   
+										<Label x:Name="Second_OS_Language_Info" Margin="4,0,0,0" Width="300"></Label>								
+									</StackPanel>										
+														
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Timezone" Margin="4,0,0,0" Width="110"></Label>
+										<ComboBox x:Name="Choose_Timezone" SelectedIndex="0" Text="Choose" Height="25" Width="185" Margin="0,0,0,0"></ComboBox>                    
+									</StackPanel>	
+
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Keyboard layout" Margin="4,0,0,0" Width="110"></Label>
+										<ComboBox x:Name="Choose_Keyboard_Layout" SelectedIndex="0" Text="Choose" Height="25" Width="185" Margin="0,0,0,0"></ComboBox>                    
+									</StackPanel>										
+								</StackPanel>                                     
+							</Grid>
+					</TabItem>
+					
+					<TabItem Header="Domain" Margin="0,0,0,0" FontSize="12">
+						<Grid>
+								<StackPanel>		
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Organisation name" Margin="4,0,0,0" Width="110"></Label>
+										<TextBox x:Name="Org_name" Margin="0,0,0,0" Width="185" Height="19"></TextBox>			
+										<Label Content="Name displayed in the deployment progress bar" Margin="4,0,0,0" Width="300"></Label>																		
+									</StackPanel>	
+								
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Computer name" Margin="4,0,0,0" Width="110"></Label>
+										<TextBox x:Name="Computer_Name" Margin="0,0,0,0" Width="185" Height="19"></TextBox>	
+										<CheckBox x:Name="Computer_Name_SN" Content="Set by Serial Number" Margin="10,5,0,0" Height="19"></CheckBox>										
+									</StackPanel>
+									
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Admin Password " Margin="4,0,0,0" Width="110"></Label>
+										<TextBox x:Name="Local_Admin_PWD" Margin="0,0,0,0" Width="185" Height="19"></TextBox>																				
+									</StackPanel>							
+																
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="WKG or Domain" Margin="4,0,0,0" Width="110"></Label>
+										<ComboBox SelectedIndex="0" Text="Choose" Height="25" Width="100" Margin="0,0,0,0">
+											<ComboBoxItem x:Name="Mode_Workgroup" Content="WorkGroup"></ComboBoxItem>
+											<ComboBoxItem x:Name="Mode_Domain" Content="Domain"></ComboBoxItem>
+										</ComboBox>   
+										<Button x:Name="Choose_mode" Content="Choose"  Margin="5,0,0,0" Width="80" Height="26"></Button>							
+									</StackPanel>							
+									
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label x:Name="Domaine_Wkg_Label" Margin="4,0,0,0" Width="110"></Label>
+										<TextBox x:Name="Domaine_Wkg_txtbox" Margin="0,0,0,0" Width="185" Height="19"></TextBox>																				
+									</StackPanel>
+									
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="OU name" Margin="4,0,0,0" Width="110"></Label>
+										<TextBox x:Name="OU_name" Margin="0,0,0,0" Width="185" Height="19"></TextBox>
+									</StackPanel>								
+												
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="User name" Margin="4,0,0,0" Width="110"></Label>
+										<TextBox x:Name="UserName" Margin="0,0,0,0" Width="185" Height="19"></TextBox>
+									</StackPanel>								
+												
+									<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+										<Label Content="Admin password" Margin="4,0,0,0" Width="110"></Label>
+										<TextBox x:Name="Domain_Admin_Pwd" Margin="0,0,0,0" Width="185" Height="19"></TextBox>
+									</StackPanel>								
+								</StackPanel>  
+						</Grid>
+					</TabItem>
+							
+					<TabItem Header="Network" Margin="0,0,0,0" FontSize="12">
+						<Grid>
+							<StackPanel>				
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+									<Label Content="Network type" Margin="4,0,0,0" Width="110"></Label>
+									<ComboBox SelectedIndex="0" Text="Choose" Height="25" Width="100" Margin="0,0,0,0">
+										<ComboBoxItem x:Name="Choose_DHCP" Content="DHCP"></ComboBoxItem>
+										<ComboBoxItem x:Name="Choose_Static" Content="Static"></ComboBoxItem>
+									</ComboBox>  	
+									<Button x:Name="Choose_Network_Type" Content="Choose"  Margin="5,0,0,0" Width="80" Height="26"></Button>														
+								</StackPanel>
+								
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="IP Address " Margin="4,0,0,0" Width="110"></Label>
+									<TextBox x:Name="IPAddress" Margin="0,0,0,0" Width="185" Height="19"></TextBox>																				
+								</StackPanel>
+											
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="Gateway" Margin="4,0,0,0" Width="110"></Label>
+									<TextBox x:Name="Gateway" Margin="0,0,0,0" Width="185" Height="19"></TextBox>
+								</StackPanel>								
+											
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="Mask" Margin="4,0,0,0" Width="110"></Label>
+									<TextBox x:Name="SubnetMask" Margin="0,0,0,0" Width="185" Height="19"></TextBox>
+								</StackPanel>	
+								
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="DNS Server(s)" Margin="4,0,0,0" Width="110"></Label>
+									<TextBox x:Name="DNS_Server" Margin="0,0,0,0" Width="185" Height="19"></TextBox>
+								</StackPanel>									
+
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="Home page" Margin="4,0,0,0" Width="110"></Label>
+									<TextBox x:Name="IE_home_page" Margin="0,0,0,0" Width="185" Height="19"></TextBox>			
+									<Label Content="Set your Internet Explorer home page" Margin="4,0,0,0" Width="300"></Label>																
+								</StackPanel>									
+							</StackPanel>   
+							</Grid>
+					</TabItem>			
+
+					
+					<TabItem Header="Backup" Margin="0,0,0,0" FontSize="12">
+						<Grid>
+							<StackPanel>	
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Center" Margin="0,0,0,0">					
+									<StackPanel Orientation="Vertical" Width="350" Margin="4,0,0,0">									
+										<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+											<Label x:Name="computerbackup_location_label"  Margin="4,0,0,0" Width="200" Foreground="Blue" FontSize="18"></Label>
+										</StackPanel>		
+										
+									<!--  If deployment type equals REFRESH -->		
+									
+										<StackPanel x:Name="Computer_Backup_type" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+											<Label Content="Backup type" Margin="4,0,0,0" Width="110"></Label>
+											<ComboBox x:Name="Combox_Computer_Backup_Type" SelectedIndex="0" Text="Choose" Height="25" Width="185" Margin="0,0,0,0">
+												<ComboBoxItem x:Name="Backup_Computer_No" Content="Do not backup the existing computer"/>
+												<ComboBoxItem x:Name="Backup_Computer_Auto" Content="Automatically determine the location"/>
+												<ComboBoxItem x:Name="Backup_Computer_Specify" Content="Specify a location"/>									
+											</ComboBox>                    								
+										</StackPanel>	
+
+										<StackPanel x:Name="Computer_Backup_Location" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+											<Label Content="Backup location" Margin="4,0,0,0" Width="110"></Label>
+											<TextBox x:Name="Computer_Backup_Location_TextBox" Margin="0,0,0,0" Width="185" Height="19"></TextBox>	
+										</StackPanel>										
+
+									<!--  If deployment type equals NEWCOMPUTER -->										
+									
+										<StackPanel x:Name="Capture_computer" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+											<Label Content="Capture type" Margin="4,0,0,0" Width="110"></Label>
+											<ComboBox x:Name="Combo_Capture_Computer" SelectedIndex="0" Text="Choose" Height="25" Width="115" Margin="0,0,0,0">
+												<ComboBoxItem x:Name="capture_computer_no" Content="Do not capture"/>
+												<ComboBoxItem x:Name="capture_computer_yes" Content="Capture my computer"/>
+												<ComboBoxItem x:Name="sysprep_this_computer" Content="Sysprep this computer"/>
+												<ComboBoxItem x:Name="prepare_to_capture" Content="Prepare to capture the machine"/>						
+											</ComboBox>     
+											<Button x:Name="Choose_capture" Content="Apply"  Margin="4,0,0,0" Width="66" Height="26"></Button>														               								
+										</StackPanel>											
+										
+										<StackPanel x:Name="Capture_Location" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+											<Label Content="Capture location" Margin="4,0,0,0" Width="110"></Label>
+											<TextBox x:Name="Capture_backup_location_textbox" Margin="0,0,0,0" Width="185" Height="19"></TextBox>	
+											<Label x:Name="Capture_backup_location_info" Margin="4,0,0,0" Width="300"></Label>																										
+										</StackPanel>																
+													
+										<StackPanel x:Name="Capture_Name" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+											<Label Content="Capture name" Margin="4,0,0,0" Width="110"></Label>
+											<TextBox x:Name="Capture_file_name" Margin="0,0,0,0" Width="120" Height="19"></TextBox>
+											<ComboBox x:Name="Combo_Backup_Type" SelectedIndex="0" Text="Choose" Height="25" Width="60" Margin="4,0,0,0">
+												<ComboBoxItem x:Name="WIM_file" Content="WIM"/>
+												<ComboBoxItem x:Name="VHD_File" Content="VHD"/>
+											</ComboBox> 														
+										</StackPanel>		
+										
+										<StackPanel x:Name="Capture_User_Name" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+											<Label Content="User name" Margin="4,0,0,0" Width="110"></Label>
+											<TextBox x:Name="Capture_location_user" Margin="0,0,0,0" Width="185" Height="19"></TextBox>	
+										</StackPanel>		
+										
+										<StackPanel x:Name="Capture_User_Password" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+											<Label Content="Password" Margin="4,0,0,0" Width="110"></Label>
+											<TextBox x:Name="Capture_location_password" Margin="0,0,0,0" Width="185" Height="19"></TextBox>	
+										</StackPanel>												
+
+										<StackPanel x:Name="Capture_User_Domain" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+											<Label Content="Domain" Margin="4,0,0,0" Width="110"></Label>
+											<TextBox x:Name="Capture_location_domain" Margin="0,0,0,0" Width="185" Height="19"></TextBox>	
+										</StackPanel>								
+									</StackPanel>  
+
+
+									
+									<StackPanel Orientation="Vertical"  Width="300" Margin="20,0,0,0">	
+										<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+											<Label x:Name="UserDataLocation_Label"  Margin="4,0,0,0" Width="240" Foreground="Blue" FontSize="18"></Label>
+										</StackPanel>
+
+									<!--  If deployment type equals REFRESH -->
+									
+										<StackPanel x:Name="user_data_backup_type" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+											<Label Content="Backup type" Margin="4,0,0,0" Width="110"></Label>
+											<ComboBox x:Name="Combox_UserData_Backup_Type" SelectedIndex="0" Text="Choose" Height="25" Width="185" Margin="0,0,0,0">
+												<ComboBoxItem x:Name="Backup_UserData_NO" Content="Do not save data and settings"/>
+												<ComboBoxItem x:Name="Backup_UserData_Auto" Content="Automatically determine the location"/>
+												<ComboBoxItem x:Name="Backup_UserData_Network" Content="Specify a location"/>									
+											</ComboBox>                    								
+										</StackPanel>	
+
+										<StackPanel x:Name="Backup_Location" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+											<Label Content="Backup location" Margin="4,0,0,0" Width="110"></Label>
+											<TextBox x:Name="UserData_Backup_location_textbox" Margin="0,0,0,0" Width="185" Height="19"></TextBox>	
+										</StackPanel>											
+									
+									
+									<!--  If deployment type equals NEWCOMPUTER -->
+									
+										<StackPanel x:Name="move_userdata" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+											<Label  Content="Move data" Margin="4,0,0,0" Width="110"></Label>
+											<RadioButton x:Name="move_data_yes" Content="Yes"/>
+											<RadioButton x:Name="move_data_no" Content="No" Margin="10,0,0,0"/>									
+											<Button x:Name="move_data_apply" Content="Apply"  Margin="14,0,0,0" Width="80" Height="26"></Button>														
+										</StackPanel>	
+		
+										<StackPanel x:Name="restore_user_data" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+											<Label  Content="Restore user data" Margin="4,0,0,0" Width="110"></Label>
+											<ComboBox x:Name="Combo_restore_UserData" SelectedIndex="0" Text="Choose" Height="25" Width="185" Margin="0,0,0,0">
+												<ComboBoxItem x:Name="restore_user_data_no" Content="Do not restore user data and settings"/>
+												<ComboBoxItem x:Name="restore_user_data_specify_location" Content="Specify a location"/>									
+											</ComboBox>                    								
+										</StackPanel>														
+
+										<StackPanel x:Name="Restore_Location" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+											<Label Content="Restore location" Margin="4,0,0,0" Width="110"></Label>
+											<TextBox x:Name="UserData_restore_location_textbox" Margin="0,0,0,0" Width="185" Height="19"></TextBox>	
+										</StackPanel>	
+										
+									</StackPanel>             
+								</StackPanel>  								
+							</StackPanel>   
+							</Grid>
+					</TabItem>						
+										
+
+					<TabItem Header="Wizard" FontSize="12">
+						<Grid>
+							<StackPanel>					
+								<StackPanel Orientation="Vertical" FlowDirection="LeftToRight" Margin="0,5,0,0" HorizontalAlignment="Left">
+									<Label Content="Select a wizard to hide it the Deployment Wizard" Margin="0,0,0,0" Width="400"></Label>		
+								</StackPanel>	
+								
+								<StackPanel Orientation="Vertical" FlowDirection="LeftToRight" Margin="0,10,0,0">
+									<CheckBox x:Name="Skip_All" Content="Skip All wizards" ToolTip="Hide all wizard panes" Margin="4,0,0,0" Height="19"></CheckBox>											
+								</StackPanel>									
+
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Left" Margin="0,20,0,0">					
+									<StackPanel Orientation="Vertical" Width="160" Margin="4,0,0,0">
+										<CheckBox x:Name="Skip_TS" Content="Skip TaskSequence" ToolTip="Hide the task sequence wizard pane" Margin="0,5,0,0" Height="19"></CheckBox>		
+										<CheckBox x:Name="Skip_ProductKey" Content="Skip ProductKey" ToolTip="Hide the product key wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>
+										<CheckBox x:Name="Skip_move_user_data" Content="Skip move user data" ToolTip="Hide the  move data and settings wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>																														
+										<CheckBox x:Name="Skip_restore_UserData" Content="Skip restore user Data" ToolTip="Hide the restore user data wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>																					
+										<CheckBox x:Name="Skip_DomainMemberShip" Content="Skip DomainMembership" ToolTip="Hide the domain membership wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>																				
+									</StackPanel>   
+										
+									<StackPanel Orientation="Vertical"  Width="140" Margin="20,0,0,0">
+										<CheckBox x:Name="Skip_AdminPWD" Content="Skip AdminPassword" ToolTip="Hide the admin password wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>																			
+										<CheckBox x:Name="Skip_Applications" Content="Skip Applications" ToolTip="Hide the application selection wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>																	
+										<CheckBox x:Name="Skip_Capture" Content="Skip capture" ToolTip="Hide the capture wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>		
+										<CheckBox x:Name="Skip_Bitlocker" Content="Skip BitLocker" ToolTip="Hide the Bitlocker wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>																				
+										<CheckBox x:Name="Skip_Computer_name" Content="Skip Computer name" Margin="0,5,0,0" Height="19"></CheckBox>																																						
+									</StackPanel>             
+
+										
+									<StackPanel Orientation="Vertical"  Width="140" Margin="20,0,0,0">
+										<CheckBox x:Name="Skip_Locale_time" Content="Skip Locale time" ToolTip="Hide the locale and time wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>	
+										<CheckBox x:Name="Skip_Language_packs" Content="Skip Language packs " ToolTip="Hide the language packs wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>																			
+										<CheckBox x:Name="Skip_Summary" Content="Skip Summary" ToolTip="Hide the summary wizard panes" Margin="0,5,0,0"  Height="19"></CheckBox>										
+										<CheckBox x:Name="Skip_Final_Summary" Content="Skip final summary" ToolTip="Hide the final summary at the end of the deployment" Margin="0,5,0,0"  Height="19"></CheckBox>																		
+									</StackPanel>    									
+								</StackPanel>  				
+							</StackPanel>					
+						</Grid>
+					</TabItem>
+
+					<TabItem x:Name="appimage" Header="Applications" FontSize="12"  Margin="0,0,0,0">
+						<Grid Background="CornFlowerBlue" Height="150">
+
+									<DataGrid   Name="DataGrid_Applis"  ItemsSource="{Binding}"  Margin="2,2,2,2" >
+										<DataGrid.Columns>			
+										<DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+										EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+										Header="Selected"
+										Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
+										/>			
+										
+										<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>										
+										<DataGridTextColumn Header="GUID" Binding="{Binding GUID}"/>																					
+										</DataGrid.Columns>
+									</DataGrid>						
+						</Grid>
+					</TabItem>
+					
+					<TabItem Header="Other" FontSize="12"  Margin="0,0,0,0">
+						<Grid>
+							<StackPanel HorizontalAlignment="Left" Width="750">													
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+									<Label Content="Finish action" Margin="0,0,0,0" Width="80"></Label>
+									<ComboBox x:Name="Finish_Action" SelectedIndex="0" Text="Finish action" Height="25" Width="120" Margin="5,0,0,0">
+										<ComboBoxItem x:Name="Finish_Action_DoNothing" Content="Do nothing"/>
+										<ComboBoxItem x:Name="Finish_Action_Reboot" Content="Reboot"/>
+										<ComboBoxItem x:Name="Finish_Action_Shutdown" Content="Shutdown"/>	
+										<ComboBoxItem x:Name="Finish_Action_LogOff" Content="LogOff"/>																				
+									</ComboBox>                         								
+								</StackPanel>		
+								
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">							
+									<Label Content="GPO Pack" Margin="0,0,0,0" Width="80"></Label>
+									<ComboBox x:Name="GPO_Pack_path" SelectedIndex="0" Text="Finish action" Height="25" Width="120" Margin="5,0,0,0">
+										<ComboBoxItem x:Name="GPO_Pack_DoNothing" Content="Do not apply"/>																	
+									</ComboBox> 
+									<Label x:Name="GPO_Pack_Info" Margin="4,0,0,0" Width="300"></Label>																																			
+								</StackPanel>									
+
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="WSUS Server" Margin="0,0,0,0" Width="80"></Label>
+									<TextBox x:Name="Set_WSUS_Server" Margin="5,0,0,0" Width="120" Height="19"></TextBox>			
+								</StackPanel>		
+
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="Event service" Margin="0,0,0,0" Width="80"></Label>
+									<TextBox x:Name="Event_Service" Margin="5,0,0,0" Width="120" Height="19"></TextBox>			
+									<Label Content="Set the live reporting in the monitoring section " Margin="4,0,0,0" Width="300"></Label>																																												
+								</StackPanel>			
+
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="End Log files" Margin="0,0,0,0" Width="80"></Label>
+									<TextBox x:Name="Logs_SLShare" Margin="5,0,0,0" Width="120" Height="19"></TextBox>	
+									<CheckBox x:Name="SLShare_Deployroot" Content="Set on the deployroot" Margin="10,5,0,0" Height="19"></CheckBox>																											
+								</StackPanel>			
+
+								<StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0,5,0,0">
+									<Label Content="Real time log" Margin="0,0,0,0" Width="80"></Label>
+									<TextBox x:Name="Logs_SLShareDynamicLogging" Margin="5,0,0,0" Width="120" Height="19"></TextBox>			
+									<Label Content="Enable the real time logging of your Task Sequence" Margin="4,0,0,0" Width="300"></Label>																																												
+								</StackPanel>									
+														
+								<StackPanel Orientation="Vertical"  Margin="4,10,0,0">
+									<CheckBox x:Name="Hide_Shell" Content="Hide explorer during the deployment process" ToolTip="Hide the product key wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>
+									<CheckBox x:Name="Not_extra_partition" Content="Do not create extra partition" ToolTip="Hide the product key wizard panes" Margin="0,5,0,0" Height="19"></CheckBox>
+								</StackPanel>  	
+																
+							</StackPanel>								
+						</Grid>
+					</TabItem>					
+
+					
+				</TabControl>
+			</StackPanel>
+		</StackPanel>		
+		
+        <StackPanel VerticalAlignment="Bottom" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,0">
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Button x:Name="Create_Profile" Content="Create my profile" Width="780" ></Button>				
+            </StackPanel>
+        </StackPanel> 
+    </Grid>
+</Controls:MetroWindow>        
